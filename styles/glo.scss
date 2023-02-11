@@ -1,0 +1,28 @@
+:root {
+  $w_bp1: 200px;
+  $w_bp2: 600px;
+  $w_bp3: 1200px;
+  $w_bp4: 1920px;
+
+  font-size: 16px;
+
+  @media (min-width: 0px) and (max-width: $w_bp1) {
+    font-size: 16px;
+  }
+
+  @media (min-width: $w_bp1) and (max-width: $w_bp2) {
+    font-size: 24px;
+  }
+
+  @media (min-width: $w_bp2) and (max-width: $w_bp3) {
+    font-size: 24px;
+  }
+
+  @media (min-width: $w_bp3) and (max-width: $w_bp4) {
+    font-size: 16px;
+  }
+
+  @media (min-width: $w_bp4) {
+    font-size: 16px;
+  }
+}

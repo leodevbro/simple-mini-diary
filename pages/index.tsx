@@ -12,12 +12,13 @@ const styles = {
 
 const IndexPage = () => (
   <div css={[styles.container({ hasBackground: true })]}>
-    <div tw="flex flex-col justify-center h-full gap-y-5">
+    <div tw="flex flex-col justify-center h-full gap-y-5 md:accent-amber-50">
       <Button variant="primary">Submit</Button>
       <Button variant="secondary">Cancel</Button>
       <Button isSmall>Close</Button>
     </div>
     <Logo />
+    <p style={{ fontSize: '1rem' }}>444444444</p>
   </div>
 )
 
