@@ -1,4 +1,5 @@
 import { GrandCard } from 'components/GrandCard';
+import { HistCard } from 'components/HistCard';
 import Button from 'components/old-samples/Button';
 import Logo from 'components/old-samples/Logo';
 import React from 'react';
@@ -75,6 +76,7 @@ const HistSlide = styled.div`
 
 const OneBoxOfSlide = styled.div`
   min-width: 150px;
+  max-width: 400px;
   width: 200px;
   height: 200px;
 
@@ -96,7 +98,11 @@ const IndexPage = () => {
       <HistBox>
         <HistSlide>
           {[1, 2, 3, 4, 5, 6, 7].map((x) => {
-            return <OneBoxOfSlide key={x}>x</OneBoxOfSlide>;
+            return (
+              <OneBoxOfSlide key={x}>
+                <HistCard />
+              </OneBoxOfSlide>
+            );
           })}
         </HistSlide>
       </HistBox>

@@ -9,8 +9,9 @@ import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromW
 
 
 import dayjs, { Dayjs } from 'dayjs';
-import { FC, useState } from 'react';
+import { ChangeEventHandler, FC, useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { longText } from 'styles/GlobalStyles';
 import tw from 'twin.macro';
 
 const MainFrame = styled.div`
@@ -59,6 +60,9 @@ const DescriptionBox = styled.textarea`
   resize: none;
   border: 1px solid gray;
   width: 100%;
+  overflow-y: scroll;
+  cursor: auto;
+  padding: 10px;
 
   ${tw`
     flex
@@ -105,7 +109,14 @@ const OneRate = styled.div`
 `;
 
 export const GrandCard: FC<{}> = ({}) => {
-  const [value, setValue] = useState<Dayjs | null>(dayjs());
+  // const [value, setValue] = useState<Dayjs | null>(dayjs());
+
+  const [descr, setDescr] = useState(longText);
+
+  const onChangeDescr: ChangeEventHandler<HTMLTextAreaElement> = useCallback((e) => {
+    const newVal = e.target.value;
+    setDescr(newVal);
+  }, []);
 
   return (
     <MainFrame>
@@ -125,7 +136,7 @@ export const GrandCard: FC<{}> = ({}) => {
       </DateFrame>
 
       <DescriptionFrame>
-        <DescriptionBox value={'dsfsdfsdf'} onChange={() => 4} />
+        <DescriptionBox value={descr} onChange={onChangeDescr} />
       </DescriptionFrame>
 
       <RateFrame>

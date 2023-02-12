@@ -7,10 +7,10 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
-
 import dayjs, { Dayjs } from 'dayjs';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { longText } from 'styles/GlobalStyles';
 import tw from 'twin.macro';
 
 const MainFrame = styled.div`
@@ -48,17 +48,20 @@ const DateBox = styled.div`
 const DescriptionFrame = styled.div`
   flex-grow: 1;
 
-  min-height: 200px;
+  /* min-height: 200px; */
 
   ${tw`
     flex
   `}
 `;
 
-const DescriptionBox = styled.textarea`
+const DescriptionBox = styled.div`
   resize: none;
   border: 1px solid gray;
   width: 100%;
+
+  max-height: 100px;
+  overflow-y: scroll;
 
   ${tw`
     flex
@@ -104,44 +107,28 @@ const OneRate = styled.div`
   `}
 `;
 
-export const GrandCard: FC<{}> = ({}) => {
+export const HistCard: FC<{}> = ({}) => {
   const [value, setValue] = useState<Dayjs | null>(dayjs());
 
   return (
     <MainFrame>
       <DateFrame>
-        <DateBox>
-          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Pick date"
-              value={value}
-              onChange={(newValue) => setValue(newValue)}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider> */}
-
-          date
-        </DateBox>
+        <DateBox>date</DateBox>
       </DateFrame>
 
       <DescriptionFrame>
-        <DescriptionBox value={'dsfsdfsdf'} onChange={() => 4} />
+        <DescriptionBox>{longText}</DescriptionBox>
       </DescriptionFrame>
 
       <RateFrame>
         <RateGroup>
-          {[1, 2, 3, 4, 5].map((rate) => {
-            return (
-              <DivWithAspectRatioFromWidth
-                key={rate}
-                widthCss={'15%'}
-                widthByHeight={1}
-                outerStyle={`width: 15%; margin: 2%`}
-              >
-                <OneRate>{rate}</OneRate>
-              </DivWithAspectRatioFromWidth>
-            );
-          })}
+          <DivWithAspectRatioFromWidth
+            widthCss={'15%'}
+            widthByHeight={1}
+            outerStyle={`width: 15%; margin: 2%`}
+          >
+            <OneRate>{7}</OneRate>
+          </DivWithAspectRatioFromWidth>
         </RateGroup>
       </RateFrame>
     </MainFrame>
