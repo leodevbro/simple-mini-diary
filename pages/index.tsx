@@ -1,7 +1,8 @@
+import Button from 'components/old-samples/Button';
+import Logo from 'components/old-samples/Logo';
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { Button, Logo } from './../components';
 
 const styles = {
   // Move long class sets out of jsx to keep it scannable
@@ -44,6 +45,15 @@ const EditBox = styled.div`
   `}
 `;
 
+const GrandView = styled.div`
+  flex-grow: 1;
+  border: 2px solid red;
+  ${tw`
+    flex
+    w-full
+  `}
+`;
+
 const HistBox = styled.div`
   ${tw`
     flex
@@ -77,7 +87,9 @@ const OneBoxOfSlide = styled.div`
 const IndexPage = () => {
   return (
     <MainPage className="thePage">
-      <EditBox>1111</EditBox>
+      <EditBox>
+        <GrandView>4444</GrandView>
+      </EditBox>
       <HistBox>
         <HistSlide>
           {[1, 2, 3, 4, 5, 6, 7].map((x) => {
