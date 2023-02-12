@@ -1,3 +1,3 @@
-const ErrorPage = () => <div>Not found</div>
+const ErrorPage = () => <div>Not found</div>;
 
-export default ErrorPage
+export default ErrorPage;

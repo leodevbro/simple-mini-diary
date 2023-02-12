@@ -1,6 +1,6 @@
-import React from 'react'
-import tw from 'twin.macro'
-import { Button, Logo } from './../components'
+import React from 'react';
+import tw from 'twin.macro';
+import { Button, Logo } from './../components';
 
 const styles = {
   // Move long class sets out of jsx to keep it scannable
@@ -8,7 +8,7 @@ const styles = {
     tw`flex flex-col items-center justify-center h-screen`,
     hasBackground && tw`bg-gradient-to-b from-electric to-ribbon`,
   ],
-}
+};
 
 const sampleComp = () => {
   return (
@@ -23,11 +23,11 @@ const sampleComp = () => {
       <Logo />
       <p style={{ fontSize: '1rem' }}>444444444</p>
     </div>
-  )
-}
+  );
+};
 
 const IndexPage = () => {
-  return <div>ka</div>
-}
+  return <div className="lolaaaaa">ka</div>;
+};
 
-export default IndexPage
+export default IndexPage;
