@@ -5,8 +5,9 @@ import {
   MobileDatePicker,
 } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
-import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio';
+
 import dayjs, { Dayjs } from 'dayjs';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
