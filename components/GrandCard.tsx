@@ -22,7 +22,7 @@ const MainFrame = styled.div`
 
   border: 1px solid pink;
 
-  min-height: 300px;
+  /* min-height: 300px; */
 
   padding: 2%;
 
@@ -46,6 +46,8 @@ const DateBox = styled.div`
 
 const DescriptionFrame = styled.div`
   flex-grow: 1;
+
+  min-height: 200px;
 
   ${tw`
     flex
@@ -116,6 +118,8 @@ export const GrandCard: FC<{}> = ({}) => {
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider> */}
+
+          date
         </DateBox>
       </DateFrame>
 
