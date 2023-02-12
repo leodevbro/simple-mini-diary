@@ -4,14 +4,18 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 
 const MainFrame = styled.div`
-  max-width: 100%;
+  max-width: calc(min(100%, 700px));
   min-width: 150px;
   width: calc(40% + 200px);
-  height: 200px;
+  /* height: 200px; */
 
   margin: auto;
 
   border: 1px solid pink;
+
+  min-height: 300px;
+
+  padding: 2%;
 
   ${tw`
     flex
@@ -25,8 +29,23 @@ const DateFrame = styled.div`
   `}
 `;
 
+const DateBox = styled.div`
+  ${tw`
+    flex
+  `}
+`;
+
 const DescriptionFrame = styled.div`
   flex-grow: 1;
+
+  ${tw`
+    flex
+  `}
+`;
+
+const DescriptionBox = styled.div`
+  border: 1px solid gray;
+  width: 100%;
 
   ${tw`
     flex
@@ -69,8 +88,14 @@ const OneRate = styled.div`
 export const GrandCard: FC<{}> = ({}) => {
   return (
     <MainFrame>
-      <DateFrame>date</DateFrame>
-      <DescriptionFrame>dexription</DescriptionFrame>
+      <DateFrame>
+        <DateBox>date box</DateBox>
+      </DateFrame>
+
+      <DescriptionFrame>
+        <DescriptionBox>sdfsdf</DescriptionBox>
+      </DescriptionFrame>
+
       <RateFrame>
         <RateGroup>
           {[1, 2, 3, 4, 5].map((rate) => {
