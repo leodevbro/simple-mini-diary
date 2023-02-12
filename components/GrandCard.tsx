@@ -1,5 +1,14 @@
+import TextField from '@mui/material/TextField';
+import {
+  DatePicker,
+  LocalizationProvider,
+  MobileDatePicker,
+} from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio';
-import { FC } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
@@ -43,13 +52,20 @@ const DescriptionFrame = styled.div`
   `}
 `;
 
-const DescriptionBox = styled.div`
+const DescriptionBox = styled.textarea`
+  resize: none;
   border: 1px solid gray;
   width: 100%;
 
   ${tw`
     flex
   `}
+
+  &:focus {
+    outline: none !important;
+    border-color: #719ece;
+    box-shadow: 0 0 10px #719ece;
+  }
 `;
 
 const RateFrame = styled.div`
@@ -86,14 +102,25 @@ const OneRate = styled.div`
 `;
 
 export const GrandCard: FC<{}> = ({}) => {
+  const [value, setValue] = useState<Dayjs | null>(dayjs());
+
   return (
     <MainFrame>
       <DateFrame>
-        <DateBox>date box</DateBox>
+        <DateBox>
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Pick date"
+              value={value}
+              onChange={(newValue) => setValue(newValue)}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider> */}
+        </DateBox>
       </DateFrame>
 
       <DescriptionFrame>
-        <DescriptionBox>sdfsdf</DescriptionBox>
+        <DescriptionBox value={'dsfsdfsdf'} onChange={() => 4} />
       </DescriptionFrame>
 
       <RateFrame>
