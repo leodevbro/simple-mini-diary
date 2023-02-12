@@ -1,3 +1,4 @@
+import { GrandCard } from 'components/GrandCard';
 import Button from 'components/old-samples/Button';
 import Logo from 'components/old-samples/Logo';
 import React from 'react';
@@ -88,7 +89,9 @@ const IndexPage = () => {
   return (
     <MainPage className="thePage">
       <EditBox>
-        <GrandView>4444</GrandView>
+        <GrandView>
+          <GrandCard />
+        </GrandView>
       </EditBox>
       <HistBox>
         <HistSlide>
