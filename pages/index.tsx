@@ -2,9 +2,10 @@ import { GrandCard } from 'components/GrandCard';
 import { HistCard } from 'components/HistCard';
 import Button from 'components/old-samples/Button';
 import Logo from 'components/old-samples/Logo';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
+import { DbSchema } from 'types/main-types';
 
 const styles = {
   // Move long class sets out of jsx to keep it scannable
@@ -87,7 +88,46 @@ const OneBoxOfSlide = styled.div`
   `}
 `;
 
+const testDbVersion1: DbSchema = {
+  dayArr: [
+    {
+      date: '2023-02-10',
+      description: 'sdfsdfsdfdsf',
+      rate: 1,
+    },
+
+    {
+      date: '2023-01-09',
+      description: 'sdfsdfs dfdsf sdfsdf sfd sd',
+      rate: 2,
+    },
+  ],
+};
+
 const IndexPage = () => {
+  const [dArr, setDArr] = useState<DbSchema['dayArr']>([]);
+
+  const populateDataFromDb = useCallback(() => {
+    setDArr(testDbVersion1.dayArr);
+  }, []);
+
+  useEffect(() => {
+    const myT = setTimeout(() => {
+      populateDataFromDb();
+    }, 1000);
+
+    return () => {
+      clearInterval(myT);
+    };
+  }, []);
+
+  const mergeDataArrIntoEmptyLastNDays = useCallback(
+    (dataArr: DbSchema['dayArr']) => {
+      // const
+    },
+    [],
+  );
+
   return (
     <MainPage className="thePage">
       <EditBox>
@@ -97,9 +137,9 @@ const IndexPage = () => {
       </EditBox>
       <HistBox>
         <HistSlide>
-          {[1, 2, 3, 4, 5, 6, 7].map((x) => {
+          {dArr.map((day) => {
             return (
-              <OneBoxOfSlide key={x}>
+              <OneBoxOfSlide key={day.date}>
                 <HistCard />
               </OneBoxOfSlide>
             );

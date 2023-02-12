@@ -7,11 +7,11 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
-
 import dayjs, { Dayjs } from 'dayjs';
+import { longText } from 'helpers';
 import { ChangeEventHandler, FC, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { longText } from 'styles/GlobalStyles';
+
 import tw from 'twin.macro';
 
 const MainFrame = styled.div`
@@ -113,10 +113,13 @@ export const GrandCard: FC<{}> = ({}) => {
 
   const [descr, setDescr] = useState(longText);
 
-  const onChangeDescr: ChangeEventHandler<HTMLTextAreaElement> = useCallback((e) => {
-    const newVal = e.target.value;
-    setDescr(newVal);
-  }, []);
+  const onChangeDescr: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
+    (e) => {
+      const newVal = e.target.value;
+      setDescr(newVal);
+    },
+    [],
+  );
 
   return (
     <MainFrame>
@@ -130,7 +133,6 @@ export const GrandCard: FC<{}> = ({}) => {
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider> */}
-
           date
         </DateBox>
       </DateFrame>

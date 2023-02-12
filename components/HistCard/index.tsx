@@ -8,9 +8,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
 import dayjs, { Dayjs } from 'dayjs';
+import { longText } from 'helpers';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
-import { longText } from 'styles/GlobalStyles';
+
 import tw from 'twin.macro';
 
 const MainFrame = styled.div`
