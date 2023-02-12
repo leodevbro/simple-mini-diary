@@ -10,11 +10,12 @@ import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromW
 import dayjs, { Dayjs } from 'dayjs';
 import { longText } from 'helpers';
 import { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import tw from 'twin.macro';
+import { OneDayData } from 'types/main-types';
 
-const MainFrame = styled.div`
+const MainFrame = styled.div<{ isEmpty: boolean }>`
   max-width: calc(min(100%, 700px));
   min-width: 150px;
   width: calc(40% + 200px);
@@ -32,6 +33,14 @@ const MainFrame = styled.div`
     flex
     flex-col
   `}
+
+  ${({ isEmpty }) => {
+    if (isEmpty) {
+      return css`
+        background-color: gray;
+      `;
+    }
+  }}
 `;
 
 const DateFrame = styled.div`
@@ -48,6 +57,8 @@ const DateBox = styled.div`
 
 const DescriptionFrame = styled.div`
   flex-grow: 1;
+
+  min-height: 50px;
 
   /* min-height: 200px; */
 
@@ -108,17 +119,17 @@ const OneRate = styled.div`
   `}
 `;
 
-export const HistCard: FC<{}> = ({}) => {
-  const [value, setValue] = useState<Dayjs | null>(dayjs());
+export const HistCard: FC<{ dayData: OneDayData }> = ({ dayData }) => {
+  const isEmpty = !dayData.description && !dayData.rate;
 
   return (
-    <MainFrame>
+    <MainFrame isEmpty={isEmpty}>
       <DateFrame>
-        <DateBox>date</DateBox>
+        <DateBox>{dayData.dateStr}</DateBox>
       </DateFrame>
 
       <DescriptionFrame>
-        <DescriptionBox>{longText}</DescriptionBox>
+        <DescriptionBox>{dayData.description || ''}</DescriptionBox>
       </DescriptionFrame>
 
       <RateFrame>
@@ -128,7 +139,7 @@ export const HistCard: FC<{}> = ({}) => {
             widthByHeight={1}
             outerStyle={`width: 15%; margin: 2%`}
           >
-            <OneRate>{7}</OneRate>
+            <OneRate>{dayData.rate}</OneRate>
           </DivWithAspectRatioFromWidth>
         </RateGroup>
       </RateFrame>

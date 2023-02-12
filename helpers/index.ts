@@ -14,26 +14,34 @@ const genLongText = () => {
 
 export const longText = genLongText();
 
+export const convertDayjsDateIntoCurrTimezoneString10 = (d: dayjs.Dayjs) => {
+  const yearInCurrTimezone = d.year();
+  const monthInCurrTimezone = d.month() + 1;
+  const dayInCurrTimezone = d.date();
+
+  return `${yearInCurrTimezone}-${monthInCurrTimezone}-${dayInCurrTimezone}`;
+};
+
 export const generateIsoDateStringsForTodayAndLastNDaysDESC = (n: number) => {
   const newD = dayjs();
 
-  const todayIsoString = newD.toISOString().slice(0, 10);
+  const todayIsoString = convertDayjsDateIntoCurrTimezoneString10(newD);
 
-  const isoSet = new Set<string>([todayIsoString]);
-  const isoArr: string[] = [todayIsoString]; // DESC by date
+  const localDatesSet = new Set<string>([todayIsoString]);
+  const LocalDatesArrDESC: string[] = [todayIsoString]; // DESC by date
 
   let currD = newD;
 
   for (let i = 1; i <= n; i += 1) {
     currD = currD.add(-1, 'day');
-    const currIsoString = currD.toISOString().slice(0, 10);
+    const currIsoString = convertDayjsDateIntoCurrTimezoneString10(currD);
 
-    isoSet.add(currIsoString);
-    isoArr.push(currIsoString);
+    localDatesSet.add(currIsoString);
+    LocalDatesArrDESC.push(currIsoString);
   }
 
   return {
-    isoSet,
-    isoArrDESC: isoArr,
+    localDatesSet,
+    LocalDatesArrDESC,
   };
 };

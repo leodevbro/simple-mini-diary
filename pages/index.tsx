@@ -2,8 +2,18 @@ import { GrandCard } from 'components/GrandCard';
 import { HistCard } from 'components/HistCard';
 import Button from 'components/old-samples/Button';
 import Logo from 'components/old-samples/Logo';
-import { generateIsoDateStringsForTodayAndLastNDaysDESC } from 'helpers';
-import React, { useCallback, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import {
+  convertDayjsDateIntoCurrTimezoneString10,
+  generateIsoDateStringsForTodayAndLastNDaysDESC as generateLocalDateStringsForTodayAndLastNDaysDESC,
+} from 'helpers';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { OneDayData, DbSchema } from 'types/main-types';
@@ -95,35 +105,37 @@ const OneBoxOfSlide = styled.div`
 const testDbVersion1: DbSchema = {
   dayArr: [
     {
-      date: '2023-01-08',
+      dateStr: '2023-01-08',
       description: 'sdfsdfsdfdsf',
       rate: 1,
     },
 
     {
-      date: '2023-01-19',
+      dateStr: '2023-01-19',
       description: 'sdfsdfs dfdsf sdfsdf sfd sd',
       rate: 2,
     },
 
     {
-      date: '2023-02-08',
+      dateStr: '2023-02-08',
       description: 'sdfsdfs uuuusf sdfsdf sfd sd',
       rate: 3,
     },
 
     {
-      date: '2023-02-11',
+      dateStr: '2023-02-11',
       description: 'sdfsdfs uuuusf sdfsdf sfd sd',
-      rate: 3,
+      rate: 4,
     },
   ],
 };
 
 const IndexPage = () => {
+  const dataPopulatedFromDb = useRef(false);
   const [dArr, setDArr] = useState<DbSchema['dayArr']>([]);
 
   const populateDataFromDb = useCallback(() => {
+    dataPopulatedFromDb.current = true;
     setDArr(testDbVersion1.dayArr);
   }, []);
 
@@ -138,27 +150,29 @@ const IndexPage = () => {
   }, []);
 
   const mergeDataArrIntoEmptyLastNDays = useCallback(
-    (origDataArrASC: DbSchema['dayArr'], n: number) => {
-      const isoDateStringsForTodayAndLastNDays =
-        generateIsoDateStringsForTodayAndLastNDaysDESC(n);
-      console.log(isoDateStringsForTodayAndLastNDays);
+    (origDataArrASC: OneDayData[], n: number) => {
+      const localDateStringsForTodayAndLastNDays =
+        generateLocalDateStringsForTodayAndLastNDaysDESC(n);
+      console.log(localDateStringsForTodayAndLastNDays);
 
       const origDataArrDESC = (
-        JSON.parse(JSON.stringify(origDataArrASC)) as DbSchema['dayArr']
-      ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        JSON.parse(JSON.stringify(origDataArrASC)) as OneDayData[]
+      ).sort(
+        (a, b) => new Date(b.dateStr).getTime() - new Date(a.dateStr).getTime(),
+      );
 
-      const editorial_DataArrASC: DbSchema['dayArr'] = [...origDataArrDESC];
+      const editorial_DataArrASC: OneDayData[] = [...origDataArrDESC];
 
       const mapOfIso10DateToItem = new Map<string, OneDayData>(
         origDataArrDESC.map((day) => {
-          return [day.date.slice(0, 10), day];
+          return [day.dateStr, day];
         }),
       );
 
-      for (const currIsoDate of isoDateStringsForTodayAndLastNDays.isoArrDESC) {
-        if (!mapOfIso10DateToItem.has(currIsoDate)) {
+      for (const currLocalDate of localDateStringsForTodayAndLastNDays.LocalDatesArrDESC) {
+        if (!mapOfIso10DateToItem.has(currLocalDate)) {
           editorial_DataArrASC.push({
-            date: currIsoDate,
+            dateStr: currLocalDate,
             description: null,
             rate: null,
           });
@@ -166,13 +180,32 @@ const IndexPage = () => {
       }
 
       editorial_DataArrASC.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+        (a, b) => new Date(a.dateStr).getTime() - new Date(b.dateStr).getTime(),
       );
 
       return editorial_DataArrASC;
     },
     [],
   );
+
+  const finalArrOfDays = useMemo(() => {
+    if (!dataPopulatedFromDb.current) {
+      return [];
+    }
+    const initArr = mergeDataArrIntoEmptyLastNDays(dArr, 7);
+
+    const localDateStrOfTomorrow = convertDayjsDateIntoCurrTimezoneString10(
+      dayjs().add(1, 'day'),
+    );
+
+    initArr.push({
+      description: null,
+      rate: null,
+      dateStr: localDateStrOfTomorrow,
+    });
+
+    return initArr;
+  }, [dArr]);
 
   return (
     <MainPage className="thePage">
@@ -183,10 +216,10 @@ const IndexPage = () => {
       </EditBox>
       <HistBox>
         <HistSlide>
-          {dArr.map((day) => {
+          {finalArrOfDays.map((day) => {
             return (
-              <OneBoxOfSlide key={day.date}>
-                <HistCard />
+              <OneBoxOfSlide key={day.dateStr}>
+                <HistCard dayData={day} />
               </OneBoxOfSlide>
             );
           })}
