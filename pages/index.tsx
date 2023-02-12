@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import tw from 'twin.macro';
 import { Button, Logo } from './../components';
 
@@ -26,8 +27,66 @@ const sampleComp = () => {
   );
 };
 
+const MainPage = styled.div`
+  ${tw`
+    flex
+    flex-col
+  `}
+`;
+
+const EditBox = styled.div`
+  flex-grow: 1;
+
+  ${tw`
+    flex
+    border-4
+    border-amber-300
+  `}
+`;
+
+const HistBox = styled.div`
+  ${tw`
+    flex
+    border-4
+    border-amber-600
+  `}
+`;
+
+const HistSlide = styled.div`
+  border: 2px solid green;
+
+  ${tw`
+    overflow-x-scroll
+    flex
+    w-full
+  `}
+`;
+
+const OneBoxOfSlide = styled.div`
+  min-width: 150px;
+  width: 200px;
+  height: 200px;
+
+  border: 2px solid blue;
+
+  ${tw`
+    flex
+  `}
+`;
+
 const IndexPage = () => {
-  return <div className="lolaaaaa">ka</div>;
+  return (
+    <MainPage className="thePage">
+      <EditBox>1111</EditBox>
+      <HistBox>
+        <HistSlide>
+          {[1, 2, 3, 4, 5, 6, 7].map((x) => {
+            return <OneBoxOfSlide key={x}>x</OneBoxOfSlide>;
+          })}
+        </HistSlide>
+      </HistBox>
+    </MainPage>
+  );
 };
 
 export default IndexPage;
