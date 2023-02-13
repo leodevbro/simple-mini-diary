@@ -41,7 +41,6 @@ const MainFrame = styled.div<{
 
   &:hover {
     cursor: pointer;
-    z-index: 50;
   }
 
   width: 100%;
@@ -125,7 +124,8 @@ const DescriptionBox = styled.div`
   text-align: left;
 
   max-height: 100px;
-  overflow-y: scroll;
+  overflow-y: hidden;
+  overflow-x: hidden;
 
   background-color: #ffffff22;
   border-radius: 6px;
@@ -197,13 +197,28 @@ export const HistCard: FC<{
 
   const isSelected = dayData.dateStr === currDateStr;
 
+  const isLegitActionRef = useRef(true);
+
+  const fnToSelect = isForTomorrow
+    ? undefined
+    : () => {
+        setCurrDateStr(dayData.dateStr);
+      };
+
   return (
     <MainFrame
       isEmpty={isEmpty}
       isSelected={isSelected}
-      onClick={
-        isForTomorrow ? undefined : () => setCurrDateStr(dayData.dateStr)
-      }
+      onClick={fnToSelect}
+      onTouchMove={() => {
+        isLegitActionRef.current = false;
+      }}
+      onTouchEnd={() => {
+        if (isLegitActionRef.current) {
+          fnToSelect && fnToSelect();
+        }
+        isLegitActionRef.current = true;
+      }}
       className={cla('specialMoodArea', cl_mood)}
       isLeftMost={dIndex === 0}
     >
