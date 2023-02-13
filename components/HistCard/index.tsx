@@ -27,15 +27,32 @@ import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
 import { OneDayData } from 'types/main-types';
 
-const MainFrame = styled.div<{ isEmpty: boolean }>`
-  max-width: calc(min(100%, 700px));
-  min-width: 150px;
-  width: calc(40% + 200px);
+const MainFrame = styled.div<{ isEmpty: boolean; isLeftMost: boolean }>`
+  /* max-width: calc(min(100%, 700px)); */
+  /* min-width: 150px; */
+  /* width: calc(40% + 200px); */
   /* height: 200px; */
 
-  margin: auto;
+  width: 100%;
+  height: 100%;
 
-  border: 1px solid pink;
+  outline: 2px solid rgba(61, 68, 160, 0.644);
+  outline-offset: -2px;
+
+  border-radius: 20px;
+
+  /* margin-left: 5%; */
+  /* margin-right: 5%; */
+
+  ${({ isLeftMost }) => {
+    if (isLeftMost) {
+      return css`
+        
+      `;
+    }
+  }}
+
+  /* border: 1px solid pink; */
 
   /* min-height: 300px; */
 
@@ -80,22 +97,24 @@ const DescriptionFrame = styled.div`
 `;
 
 const DescriptionBox = styled.div`
-  resize: none;
-  border: 1px solid gray;
+  overflow-wrap: anywhere;
+  /* border: 1px solid gray; */
   width: 100%;
+  text-align: left;
 
   max-height: 100px;
   overflow-y: scroll;
 
+  background-color: #ffffff4e;
+  border-radius: 6px;
+
   ${tw`
     flex
-  `}
-
-  &:focus {
+  `}/* &:focus {
     outline: none !important;
     border-color: #719ece;
     box-shadow: 0 0 10px #719ece;
-  }
+  } */
 `;
 
 const RateFrame = styled.div`
@@ -108,7 +127,7 @@ const RateFrame = styled.div`
 const RateGroup = styled.div`
   position: relative;
   width: 70%;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   min-width: 200px;
 
   ${tw`
@@ -135,7 +154,9 @@ export const HistCard: FC<{
   dayData: OneDayData;
   currDateStr: null | string;
   setCurrDateStr: Dispatch<SetStateAction<string | null>>;
-}> = ({ dayData, currDateStr, setCurrDateStr }) => {
+  currSelectionIndex: null | number;
+  dIndex: number;
+}> = ({ dayData, currDateStr, setCurrDateStr, currSelectionIndex, dIndex }) => {
   const isEmpty = !dayData.description && !dayData.rate;
 
   const isForTomorrow =
@@ -151,6 +172,7 @@ export const HistCard: FC<{
         isForTomorrow ? undefined : () => setCurrDateStr(dayData.dateStr)
       }
       className={cla('specialMoodArea', cl_mood)}
+      isLeftMost={dIndex === 0}
     >
       <DateFrame>
         <DateBox>{getCoolLocalDateString(dayData.dateStr)}</DateBox>

@@ -40,7 +40,8 @@ const MainFrame = styled.div`
 
   margin: auto;
 
-  border: 1px solid pink;
+  border: 2px solid rgb(11, 11, 11);
+  border-radius: clamp(5px, 4vw, 50px);
 
   /* min-height: 300px; */
 
@@ -53,6 +54,8 @@ const MainFrame = styled.div`
 `;
 
 const DateFrame = styled.div`
+  padding-left: 3%;
+
   ${tw`
     flex
   `}
@@ -75,6 +78,8 @@ const DescriptionFrame = styled.div`
 `;
 
 const DescriptionBox = styled.textarea`
+  background-color: #ffffff4e;
+  border-radius: 6px;
   resize: none;
   border: 1px solid gray;
   width: 100%;
@@ -86,10 +91,14 @@ const DescriptionBox = styled.textarea`
     flex
   `}
 
+  outline: none !important;
+  border-color: rgb(113 158 206 / 0);
+  box-shadow: 0 0 10px rgb(113 158 206 / 0);
+
   &:focus {
     outline: none !important;
-    border-color: #719ece;
-    box-shadow: 0 0 10px #719ece;
+    border-color: rgb(113 158 206 / 0);
+    box-shadow: 0 0 10px rgb(113 158 206 / 0);
   }
 `;
 
@@ -103,7 +112,7 @@ const RateFrame = styled.div`
 const RateGroup = styled.div`
   position: relative;
   width: 70%;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   min-width: 200px;
 
   ${tw`

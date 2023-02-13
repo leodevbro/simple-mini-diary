@@ -4,16 +4,21 @@
 }
 
 .swiper-slide.swiper-slide.swiper-slide.swiper-slide {
-  border: 2px solid red;
+  // outline: 1px solid red;
   text-align: center;
   font-size: 18px;
-  background: #fff;
+  // background: #fff;
   max-width: 300px;
+  width: 20%;
+  min-width: 240px;
 
   /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
+
+  padding-left: clamp(5px, 1%, 30px);
+  padding-right: clamp(5px, 1%, 30px);
 }
 
 

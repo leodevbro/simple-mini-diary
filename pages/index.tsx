@@ -51,6 +51,12 @@ const sampleComp = () => {
 */
 
 const MainPage = styled.div`
+  border: 2px solid rgb(179, 214, 149);
+
+  background-color: rgba(128, 128, 128, 0.356);
+
+  row-gap: 20px;
+
   ${tw`
     flex
     flex-col
@@ -62,14 +68,16 @@ const EditBox = styled.div`
 
   ${tw`
     flex
-    border-4
-    border-amber-300
+    
   `}
 `;
 
 const GrandView = styled.div`
   flex-grow: 1;
-  border: 2px solid red;
+  /* border: 2px solid red; */
+
+  
+
   ${tw`
     flex
     w-full
@@ -77,15 +85,17 @@ const GrandView = styled.div`
 `;
 
 const HistBox = styled.div`
+  height: 25%;
+  min-height: 150px;
+
   ${tw`
     flex
-    border-4
-    border-amber-600
+    
   `}
 `;
 
 const HistSlide = styled.div`
-  border: 2px solid green;
+  /* border: 2px solid green; */
 
   ${tw`
     overflow-x-scroll

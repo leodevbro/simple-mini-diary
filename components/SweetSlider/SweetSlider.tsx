@@ -22,12 +22,12 @@ import tw from 'twin.macro';
 import { HistCard } from 'components/HistCard';
 
 const OneBoxOfSlide = styled.div`
-  min-width: 150px;
-  max-width: 400px;
-  width: 200px;
-  height: 200px;
+  /* min-width: 150px;
+  max-width: 400px; */
+  width: 100%;
+  height: 100%;
 
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 
   ${tw`
     flex
@@ -74,6 +74,8 @@ export const SweetSlider: React.FC<{
                 dayData={day}
                 currDateStr={currDateStr}
                 setCurrDateStr={setCurrDateStr}
+                currSelectionIndex={currIndex}
+                dIndex={dIndex}
               />
             </OneBoxOfSlide>
           </SwiperSlide>

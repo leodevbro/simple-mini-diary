@@ -16,8 +16,8 @@ body,
 }
 
 :root {
-  --scroll-color1: rgb(239, 68, 68);
-  --scroll-color2: rgb(202, 37, 37);
+  --scroll-color1: rgba(255, 255, 255, 0.219);
+  --scroll-color2: rgba(255, 255, 255, 0.514);
   --scroll-color3: rgba(179, 122, 122, 0.438);
 
   $w_bp1: 200px;
@@ -27,7 +27,7 @@ body,
 
   font-size: 16px;
 
-  border: 3px solid red;
+  // border: 3px solid red;
 
   @media (min-width: 0px) and (max-width: $w_bp1) {
     font-size: 16px;
@@ -51,11 +51,11 @@ body,
 }
 
 body {
-  border: 3px solid blue;
+  // border: 3px solid blue;
 }
 
 #__next {
-  border: 3px solid gray;
+  // border: 3px solid gray;
 
   & > div {
     width: 100%;
@@ -159,7 +159,7 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-  background-color: #e4e4e467;
+  background-color: #e4e4e400;
   border-radius: 100px;
 }
 
