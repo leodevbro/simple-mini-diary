@@ -27,7 +27,11 @@ import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
 import { OneDayData } from 'types/main-types';
 
-const MainFrame = styled.div<{ isEmpty: boolean; isLeftMost: boolean }>`
+const MainFrame = styled.div<{
+  isEmpty: boolean;
+  isLeftMost: boolean;
+  isSelected: boolean;
+}>`
   /* max-width: calc(min(100%, 700px)); */
   /* min-width: 150px; */
   /* width: calc(40% + 200px); */
@@ -51,10 +55,11 @@ const MainFrame = styled.div<{ isEmpty: boolean; isLeftMost: boolean }>`
   /* margin-left: 5%; */
   /* margin-right: 5%; */
 
-  ${({ isLeftMost }) => {
-    if (isLeftMost) {
+  ${({ isSelected }) => {
+    if (isSelected) {
       return css`
-        
+        outline-width: 5px;
+        outline-color: rgb(55, 76, 197);
       `;
     }
   }}
@@ -175,9 +180,12 @@ export const HistCard: FC<{
 
   const cl_mood = `m${dayData.rate}`;
 
+  const isSelected = dayData.dateStr === currDateStr;
+
   return (
     <MainFrame
       isEmpty={isEmpty}
+      isSelected={isSelected}
       onClick={
         isForTomorrow ? undefined : () => setCurrDateStr(dayData.dateStr)
       }
