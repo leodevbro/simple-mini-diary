@@ -92,8 +92,23 @@ export const getLastMonday = (d: dayjs.Dayjs) => {
   return lastMonday;
 };
 
+export const getNewestSunday = (d: dayjs.Dayjs) => {
+  const currDayOfWeek = d.day();
+
+  const newestSunday = d.add(
+    currDayOfWeek === 0 ? 0 : 7 - currDayOfWeek,
+    'days',
+  );
+
+  return newestSunday;
+};
+
 export const getLastJan1 = (d: dayjs.Dayjs) => {
   return dayjs(`${d.year()}-01-01`);
+};
+
+export const getNewestDec31 = (d: dayjs.Dayjs) => {
+  return dayjs(`${d.year()}-12-31`);
 };
 
 export const getCoolLocalDateString = (isoLocalDateStr: string) => {
@@ -108,14 +123,16 @@ export const getCoolLocalDateString = (isoLocalDateStr: string) => {
     `${nowDateRaw.year()}-${nowDateRaw.month() + 1}-${nowDateRaw.date()}`,
   );
 
-  const isInCurrWeekFromLastMonday = theDate >= getLastMonday(nowDate);
+  const isInCurrWeekFromLastMondayToNewestSunday =
+    theDate >= getLastMonday(nowDate) && theDate <= getNewestSunday(nowDate);
 
-  if (isInCurrWeekFromLastMonday) {
+  if (isInCurrWeekFromLastMondayToNewestSunday) {
     return daysOfWeekInGerogianAsSunday0[theDate.day()];
   } else {
-    const isAfterLastJan1 = theDate >= getLastJan1(nowDate);
+    const isAfterLastJan1AndBeforeNewestDec31 =
+      theDate >= getLastJan1(nowDate) && theDate <= getNewestDec31(nowDate);
 
-    if (isAfterLastJan1) {
+    if (isAfterLastJan1AndBeforeNewestDec31) {
       return `${theDate.date()} ${monthsInGerogianAsJanuary0[theDate.month()]}`;
     } else {
       return `${theDate.date()} ${
@@ -124,6 +141,70 @@ export const getCoolLocalDateString = (isoLocalDateStr: string) => {
     }
   }
 };
+
+const getWeekDayDateInCurrWeek = (target: number) => {
+  // target --> 0: sunday, 1: monday ......
+
+  const lastMondayInThisWeek = getLastMonday(dayjs());
+
+  let candidateDate: dayjs.Dayjs = lastMondayInThisWeek;
+
+  for (let i = 1; i <= 8; i += 1) {
+    if (candidateDate.day() === target) {
+      break;
+    }
+    candidateDate = candidateDate.add(1, 'day');
+  }
+
+  return candidateDate;
+};
+
+const simpleTestFn = () => {
+  console.log('Started simple test');
+  const arrOfCorrectOutputs = [
+    'ხუთშაბათი',
+    '20 დეკემბერი',
+    '17 მაისი, 2019',
+    '16 ნოემბერი, 2027',
+  ];
+
+  const dateOfThursdayInCurrWeek = getWeekDayDateInCurrWeek(4);
+
+  const localIso10StringOfThursdayInCurrWeek = `${dateOfThursdayInCurrWeek.year()}-${
+    dateOfThursdayInCurrWeek.month() + 1
+  }-${dateOfThursdayInCurrWeek.date()}`;
+
+  const arrOfInputs: string[] = [
+    localIso10StringOfThursdayInCurrWeek,
+    '2023-12-20',
+    '2019-05-17',
+    '2027-11-16',
+  ];
+
+  let allOutputIsCorrect = true;
+
+  const testResultArr = arrOfInputs.map((x, index) => {
+    const res = getCoolLocalDateString(x);
+    if (res !== arrOfCorrectOutputs[index]) {
+      allOutputIsCorrect = false;
+    }
+    return res;
+  });
+
+  console.log('input:');
+  console.log(arrOfInputs);
+
+  console.log('Correct output should be like this:');
+  console.log(arrOfCorrectOutputs);
+  console.log('Output:');
+  console.log(testResultArr);
+
+  console.log('Test passed:', allOutputIsCorrect);
+
+  return testResultArr;
+};
+
+simpleTestFn();
 
 // ============================
 
