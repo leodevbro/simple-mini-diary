@@ -78,7 +78,7 @@ const MainFrame = styled.div<{
 
   /* min-height: 300px; */
 
-  padding: 2% 4%;
+  padding: 3% 5%;
 
   ${tw`
     flex
@@ -134,12 +134,12 @@ const DescriptionBox = styled.div`
   width: 100%;
   text-align: left;
 
-  max-height: 100px;
+  /* max-height: 100px; */
   overflow-y: hidden;
   overflow-x: hidden;
 
   background-color: #ffffff22;
-  border-radius: 6px;
+  border-radius: 10px;
 
   padding: 4px;
 

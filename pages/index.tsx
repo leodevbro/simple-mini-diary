@@ -87,7 +87,7 @@ const GrandView = styled.div`
 `;
 
 const HistBox = styled.div`
-  height: 25%;
+  height: 20%;
   min-height: 150px;
 
   ${tw`
