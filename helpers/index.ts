@@ -53,3 +53,74 @@ export const generateIsoDateStringsForTodayAndLastNDaysDESC = (n: number) => {
     LocalDatesArrDESC,
   };
 };
+
+const daysOfWeekInGerogianAsSunday0 = [
+  'კვირა',
+  'ორშაბათი',
+  'სამშაბათი',
+  'ოთხშაბათი',
+  'ხუთშაბათი',
+  'პარასკევი',
+  'შაბათი',
+];
+
+const monthsInGerogianAsJanuary0 = [
+  'იანვარი',
+  'თებერვალი',
+  'მარტი',
+  'აპრილი',
+  'მაისი',
+  'ივნისი',
+  'ივლისი',
+  'აგვისტო',
+  'სექსტემბერი',
+  'ოქტომბერი',
+  'ნოემბერი',
+  'დეკემბერი',
+];
+
+export const getLastMonday = (d: dayjs.Dayjs) => {
+  const currDayOfWeek = d.day();
+
+  const lastMonday = d.add(
+    currDayOfWeek === 0 ? -6 : 1 - currDayOfWeek,
+    'days',
+  );
+
+  return lastMonday;
+};
+
+export const getLastJan1 = (d: dayjs.Dayjs) => {
+  return dayjs(`${d.year()}-01-01`);
+};
+
+export const getCoolLocalDateString = (isoLocalDateStr: string) => {
+  // isoLocalDateStr --> like this: '2019-01-16'
+  if (isoLocalDateStr.length > 10) {
+    throw new Error('isoLocalDateStr.length is longer than 10 characters');
+  }
+  const theDate = dayjs(isoLocalDateStr); // here, the '2019-01-16'-like argument will be considered in local time.
+
+  const nowDateRaw = dayjs();
+  const nowDate = dayjs(
+    `${nowDateRaw.year()}-${nowDateRaw.month() + 1}-${nowDateRaw.date()}`,
+  );
+
+  const isInCurrWeekFromLastMonday = theDate >= getLastMonday(nowDate);
+
+  console.log(theDate.toISOString(), getLastMonday(nowDate).toISOString());
+
+  if (isInCurrWeekFromLastMonday) {
+    return daysOfWeekInGerogianAsSunday0[theDate.day()];
+  } else {
+    const isAfterLastJan1 = theDate >= getLastJan1(nowDate);
+
+    if (isAfterLastJan1) {
+      return `${theDate.date()} ${monthsInGerogianAsJanuary0[theDate.month()]}`;
+    } else {
+      return `${theDate.date()} ${
+        monthsInGerogianAsJanuary0[theDate.month()]
+      }, ${theDate.year()}`;
+    }
+  }
+};

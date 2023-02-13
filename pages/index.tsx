@@ -109,6 +109,11 @@ export const lc_item_name = 'cool_diary_db';
 const testDbVersion1: DbSchema = {
   dayArr: [
     {
+      dateStr: '2020-01-08',
+      description: 'sdfsdfsdfdsf',
+      rate: 1,
+    },
+    {
       dateStr: '2023-01-08',
       description: 'sdfsdfsdfdsf',
       rate: 1,

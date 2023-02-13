@@ -8,7 +8,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
 import dayjs, { Dayjs } from 'dayjs';
-import { convertDayjsDateIntoCurrTimezoneString10, longText } from 'helpers';
+import {
+  convertDayjsDateIntoCurrTimezoneString10,
+  getCoolLocalDateString,
+  longText,
+} from 'helpers';
 import { FC, useState } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -129,7 +133,7 @@ export const HistCard: FC<{ dayData: OneDayData }> = ({ dayData }) => {
   return (
     <MainFrame isEmpty={isEmpty}>
       <DateFrame>
-        <DateBox>{dayData.dateStr}</DateBox>
+        <DateBox>{getCoolLocalDateString(dayData.dateStr)}</DateBox>
       </DateFrame>
 
       <DescriptionFrame>

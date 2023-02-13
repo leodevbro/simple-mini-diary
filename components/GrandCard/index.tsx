@@ -8,7 +8,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
 import dayjs, { Dayjs } from 'dayjs';
-import { convertDayjsDateIntoCurrTimezoneString10, longText } from 'helpers';
+import {
+  convertDayjsDateIntoCurrTimezoneString10,
+  getCoolLocalDateString,
+  longText,
+} from 'helpers';
 import { lc_item_name } from 'pages';
 import {
   ChangeEvent,
@@ -125,9 +129,19 @@ export const GrandCard: FC<{
 }> = ({ dArr, setDArr }) => {
   // const [value, setValue] = useState<Dayjs | null>(dayjs());
 
-  const [currDateStr, setCurrDateStr] = useState(
-    convertDayjsDateIntoCurrTimezoneString10(dayjs()),
+  const [currDateStr, setCurrDateStr] = useState<null | string>(
+    // convertDayjsDateIntoCurrTimezoneString10(dayjs()),
+    null,
   );
+
+  const initialized = useRef(false);
+
+  useEffect(() => {
+    if (!initialized.current && dArr.length >= 1) {
+      initialized.current = true;
+      setCurrDateStr(convertDayjsDateIntoCurrTimezoneString10(dayjs()));
+    }
+  }, [dArr]);
 
   const currIndex = useMemo(() => {
     return dArr.findIndex((day) => day.dateStr === currDateStr);
@@ -178,7 +192,7 @@ export const GrandCard: FC<{
             />
           </LocalizationProvider> */}
 
-          {dArr[currIndex]?.dateStr || 'Date'}
+          {(currDateStr && getCoolLocalDateString(currDateStr)) || 'Date'}
         </DateBox>
       </DateFrame>
 
