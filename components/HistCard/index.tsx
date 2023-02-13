@@ -13,6 +13,7 @@ import {
   getCoolLocalDateString,
   longText,
 } from 'helpers';
+import { cla } from 'pages/_app';
 import {
   Dispatch,
   FC,
@@ -141,12 +142,15 @@ export const HistCard: FC<{
     convertDayjsDateIntoCurrTimezoneString10(dayjs().add(1, 'day')) ===
     dayData.dateStr;
 
+  const cl_mood = `m${dayData.rate}`;
+
   return (
     <MainFrame
       isEmpty={isEmpty}
       onClick={
         isForTomorrow ? undefined : () => setCurrDateStr(dayData.dateStr)
       }
+      className={cla('specialMoodArea', cl_mood)}
     >
       <DateFrame>
         <DateBox>{getCoolLocalDateString(dayData.dateStr)}</DateBox>

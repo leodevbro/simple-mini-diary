@@ -21,6 +21,7 @@ import tw from 'twin.macro';
 import { OneDayData, DbSchema } from 'types/main-types';
 
 import { SweetSlider } from 'components/SweetSlider/SweetSlider';
+import { cla } from 'pages/_app';
 
 /*
 const styles = {
@@ -177,28 +178,6 @@ const IndexPage = () => {
     [],
   );
 
-  /*
-  const finalArrOfDays = useMemo(() => {
-    if (!dataPopulatedFromDb.current) {
-      return [];
-    }
-    const initArr = mergeDataArrIntoEmptyLastNDays(dArr, 7);
-
-    const localDateStrOfTomorrow = convertDayjsDateIntoCurrTimezoneString10(
-      dayjs().add(1, 'day'),
-    );
-
-    initArr.push({
-      description: null,
-      rate: null,
-      dateStr: localDateStrOfTomorrow,
-    });
-
-    return initArr;
-  }, [dArr]);
-
-  */
-
   const sliderArr = useMemo(() => {
     if (!dataPopulatedFromDb.current) {
       return [];
@@ -224,13 +203,23 @@ const IndexPage = () => {
     return arr;
   }, [dArr]);
 
-  const style: any = 4;
+  const currIndex = useMemo(() => {
+    return sliderArr.findIndex((day) => day.dateStr === currDateStr);
+  }, [sliderArr, currDateStr]);
+
+  const cl_mood =
+    currIndex >= 0 && sliderArr ? `m${sliderArr[currIndex].rate}` : `m`;
 
   return (
-    <MainPage className="thePage">
+    <MainPage className={cla('thePage', 'specialMoodArea', cl_mood)}>
       <EditBox>
         <GrandView>
-          <GrandCard dArr={dArr} setDArr={setDArr} currDateStr={currDateStr} />
+          <GrandCard
+            dArr={dArr}
+            setDArr={setDArr}
+            currDateStr={currDateStr}
+            currIndex={currIndex}
+          />
         </GrandView>
       </EditBox>
       <HistBox>
@@ -238,6 +227,7 @@ const IndexPage = () => {
           <SweetSlider
             slideItems={sliderArr}
             currDateStr={currDateStr}
+            currIndex={currIndex}
             setCurrDateStr={setCurrDateStr}
           />
         </HistSlide>

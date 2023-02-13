@@ -138,14 +138,11 @@ export const GrandCard: FC<{
   dArr: OneDayData[];
   setDArr: React.Dispatch<React.SetStateAction<OneDayData[]>>;
   currDateStr: null | string;
-}> = ({ dArr, setDArr, currDateStr }) => {
+  currIndex: null | number;
+}> = ({ dArr, setDArr, currDateStr, currIndex }) => {
   // const [value, setValue] = useState<Dayjs | null>(dayjs());
 
   const initialized = useRef(false);
-
-  const currIndex = useMemo(() => {
-    return dArr.findIndex((day) => day.dateStr === currDateStr);
-  }, [dArr, currDateStr]);
 
   const timerRefForDbUpdate = useRef<NodeJS.Timeout | null>(null);
 
@@ -228,8 +225,10 @@ export const GrandCard: FC<{
 
       <DescriptionFrame>
         <DescriptionBox
-          value={dArr[currIndex]?.description || ''}
-          onChange={(e) => onChangeDescr(e, currIndex)}
+          value={(currIndex !== null && dArr[currIndex]?.description) || ''}
+          onChange={
+            currIndex !== null ? (e) => onChangeDescr(e, currIndex) : undefined
+          }
         />
       </DescriptionFrame>
 
@@ -246,8 +245,16 @@ export const GrandCard: FC<{
                 outerStyle={`width: 15%; margin: 2%`}
               >
                 <OneRate
-                  isChosen={dArr[currIndex] && rate === dArr[currIndex].rate}
-                  onClick={() => onChangeRate(rate, currIndex)}
+                  isChosen={
+                    currIndex !== null &&
+                    dArr[currIndex] &&
+                    rate === dArr[currIndex].rate
+                  }
+                  onClick={
+                    currIndex !== null
+                      ? () => onChangeRate(rate, currIndex)
+                      : undefined
+                  }
                 >
                   {rate}
                 </OneRate>

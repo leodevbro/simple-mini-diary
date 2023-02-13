@@ -39,11 +39,13 @@ export const SweetSlider: React.FC<{
 
   leftRightPaddingCss?: string; // clamp(20px, 5%, 96px);
   currDateStr: null | string;
+  currIndex: null | number;
   setCurrDateStr: Dispatch<SetStateAction<string | null>>;
 }> = ({
   slideItems,
 
   currDateStr,
+  currIndex,
   setCurrDateStr,
 }) => {
   return (

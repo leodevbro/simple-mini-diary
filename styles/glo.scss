@@ -68,6 +68,82 @@ body {
   }
 }
 
+// -------
+
+.specialMoodArea {
+  &.m1 {
+    background: #0f2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #2c5364,
+      #203a43,
+      #0f2027
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #2c5364,
+      #203a43,
+      #0f2027
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+  &.m2 {
+    background: #3d7eaa; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #ffe47a,
+      #3d7eaa
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #ffe47a,
+      #3d7eaa
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+  &.m3 {
+    background: #1d976c; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #93f9b9,
+      #1d976c
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #93f9b9,
+      #1d976c
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+  &.m4 {
+    background: #3ca55c; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #b5ac49,
+      #3ca55c
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #b5ac49,
+      #3ca55c
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+  &.m5 {
+    background: #e65c00; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #f9d423,
+      #e65c00
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #f9d423,
+      #e65c00
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+}
+
 /* scrollbar custom */
 
 /* Works on Firefox */
