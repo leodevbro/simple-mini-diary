@@ -11,9 +11,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import {
   convertDayjsDateIntoCurrTimezoneString10,
   getCoolLocalDateString,
-  longText,
-  updateDb,
 } from 'helpers';
+import { updateDb } from 'helpers/db-managment';
 import { cla } from 'pages/_app';
 
 import {

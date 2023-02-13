@@ -15,7 +15,7 @@ import { cla } from 'pages/_app';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { testDbVersion1 } from 'helpers';
+
 import { OneDayData } from 'types/main-types';
 import styled from 'styled-components';
 import tw from 'twin.macro';

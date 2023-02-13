@@ -6,8 +6,6 @@ import dayjs from 'dayjs';
 import {
   convertDayjsDateIntoCurrTimezoneString10,
   generateIsoDateStringsForTodayAndLastNDaysDESC as generateLocalDateStringsForTodayAndLastNDaysDESC,
-  getAllDataFromDb,
-  lc_item_name,
 } from 'helpers';
 import React, {
   useCallback,
@@ -22,6 +20,7 @@ import { OneDayData, DbSchema } from 'types/main-types';
 
 import { SweetSlider } from 'components/SweetSlider/SweetSlider';
 import { cla } from 'pages/_app';
+import { getAllDataFromDb } from 'helpers/db-managment';
 
 /*
 const styles = {
@@ -77,8 +76,6 @@ const EditBox = styled.div`
 const GrandView = styled.div`
   flex-grow: 1;
   /* border: 2px solid red; */
-
-  
 
   ${tw`
     flex
