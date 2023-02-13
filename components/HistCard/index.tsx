@@ -135,7 +135,10 @@ export const HistCard: FC<{
     dayData.dateStr;
 
   return (
-    <MainFrame isEmpty={isEmpty}>
+    <MainFrame
+      isEmpty={isEmpty}
+      onClick={() => setCurrDateStr(dayData.dateStr)}
+    >
       <DateFrame>
         <DateBox>{getCoolLocalDateString(dayData.dateStr)}</DateBox>
       </DateFrame>

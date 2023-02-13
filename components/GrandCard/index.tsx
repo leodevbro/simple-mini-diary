@@ -12,8 +12,9 @@ import {
   convertDayjsDateIntoCurrTimezoneString10,
   getCoolLocalDateString,
   longText,
+  updateDb,
 } from 'helpers';
-import { lc_item_name } from 'pages';
+
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -26,7 +27,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import tw from 'twin.macro';
 import { DbSchema, OneDayData } from 'types/main-types';
@@ -111,7 +112,7 @@ const RateGroup = styled.div`
   `}
 `;
 
-const OneRate = styled.div`
+const OneRate = styled.div<{ isChosen: boolean }>`
   width: 100%;
   height: 100%;
 
@@ -123,6 +124,14 @@ const OneRate = styled.div`
     [align-items: center]
     [justify-content: center]
   `}
+
+  ${({ isChosen }) => {
+    if (isChosen) {
+      return css`
+        background-color: green;
+      `;
+    }
+  }}
 `;
 
 export const GrandCard: FC<{
@@ -157,18 +166,48 @@ export const GrandCard: FC<{
         }
 
         timerRefForDbUpdate.current = setTimeout(() => {
-          const newDb: DbSchema = {
-            dayArr: shallowCopy.filter((day) => day.description || day.rate),
-          };
-
-          window.localStorage.setItem(lc_item_name, JSON.stringify(newDb));
-        }, 2000);
+          updateDb({
+            dayArr: shallowCopy,
+          });
+        }, 1000);
 
         return shallowCopy;
       });
     },
     [],
   );
+
+  const onChangeRate = useCallback(
+    (newRate: OneDayData['rate'], index: number) => {
+      if (newRate === null) {
+        return;
+      }
+
+      setDArr((prev) => {
+        const shallowCopy = [...prev];
+
+        shallowCopy[index] = {
+          ...prev[index],
+          rate: newRate,
+        };
+
+        if (timerRefForDbUpdate.current) {
+          clearTimeout(timerRefForDbUpdate.current);
+        }
+
+        timerRefForDbUpdate.current = setTimeout(() => {
+          updateDb({
+            dayArr: shallowCopy,
+          });
+        }, 1000);
+
+        return shallowCopy;
+      });
+    },
+    [],
+  );
+
+  const rateArr: OneDayData['rate'][] = [1, 2, 3, 4, 5];
 
   return (
     <MainFrame>
@@ -196,7 +235,7 @@ export const GrandCard: FC<{
 
       <RateFrame>
         <RateGroup>
-          {[1, 2, 3, 4, 5].map((rate) => {
+          {rateArr.map((rate) => {
             // const isChosenRate = rate ===
 
             return (
@@ -206,7 +245,12 @@ export const GrandCard: FC<{
                 widthByHeight={1}
                 outerStyle={`width: 15%; margin: 2%`}
               >
-                <OneRate>{rate}</OneRate>
+                <OneRate
+                  isChosen={dArr[currIndex] && rate === dArr[currIndex].rate}
+                  onClick={() => onChangeRate(rate, currIndex)}
+                >
+                  {rate}
+                </OneRate>
               </DivWithAspectRatioFromWidth>
             );
           })}
