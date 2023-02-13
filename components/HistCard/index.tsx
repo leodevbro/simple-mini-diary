@@ -137,14 +137,18 @@ export const HistCard: FC<{
   return (
     <MainFrame
       isEmpty={isEmpty}
-      onClick={() => setCurrDateStr(dayData.dateStr)}
+      onClick={
+        isForTomorrow ? undefined : () => setCurrDateStr(dayData.dateStr)
+      }
     >
       <DateFrame>
         <DateBox>{getCoolLocalDateString(dayData.dateStr)}</DateBox>
       </DateFrame>
 
       <DescriptionFrame>
-        <DescriptionBox>{dayData.description || ''}</DescriptionBox>
+        <DescriptionBox>
+          {isForTomorrow ? 'ხვალ' : dayData.description || ''}
+        </DescriptionBox>
       </DescriptionFrame>
 
       <RateFrame>
