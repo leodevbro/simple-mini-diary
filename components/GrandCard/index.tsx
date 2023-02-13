@@ -84,7 +84,7 @@ const DescriptionFrame = styled.div`
 `;
 
 const DescriptionBox = styled.textarea`
-  background-color: #ffffff4e;
+  background-color: rgba(255, 255, 255, 0.199);
   border-radius: 6px;
   resize: none;
   border: 1px solid gray;

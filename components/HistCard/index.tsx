@@ -31,6 +31,7 @@ const MainFrame = styled.div<{
   isEmpty: boolean;
   isLeftMost: boolean;
   isSelected: boolean;
+  isForTomorrow: boolean;
 }>`
   /* max-width: calc(min(100%, 700px)); */
   /* min-width: 150px; */
@@ -59,6 +60,16 @@ const MainFrame = styled.div<{
       return css`
         outline-width: 5px;
         outline-color: rgb(55, 76, 197);
+      `;
+    }
+  }}
+
+  ${({ isForTomorrow }) => {
+    if (isForTomorrow) {
+      return css`
+        & {
+          background-color: rgb(156, 241, 177);
+        }
       `;
     }
   }}
@@ -210,6 +221,7 @@ export const HistCard: FC<{
       isEmpty={isEmpty}
       isSelected={isSelected}
       onClick={fnToSelect}
+      isForTomorrow={isForTomorrow}
       onTouchMove={() => {
         isLegitActionRef.current = false;
       }}

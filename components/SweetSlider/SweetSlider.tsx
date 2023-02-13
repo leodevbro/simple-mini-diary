@@ -27,6 +27,9 @@ const OneBoxOfSlide = styled.div`
   width: 100%;
   height: 100%;
 
+  padding-left: 6px;
+  /* padding-right: 6px; */
+
   /* border: 2px solid blue; */
 
   ${tw`
