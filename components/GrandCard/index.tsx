@@ -34,24 +34,26 @@ import tw from 'twin.macro';
 import { DbSchema, OneDayData } from 'types/main-types';
 
 const MainFrame = styled.div`
-  max-width: calc(min(100%, 700px));
-  min-width: 150px;
+  max-width: calc(min(100% - 8px, 700px));
+  min-width: 220px;
   width: calc(40% + 200px);
   /* height: 200px; */
 
   margin: auto;
 
-  border: 2px solid rgb(11, 11, 11);
-  border-radius: clamp(5px, 4vw, 50px);
+  border: 2px solid rgb(4 4 4 / 0.8);
+  border-radius: clamp(12px, 4vw, 50px);
 
   /* min-height: 300px; */
 
-  padding: 2%;
+  padding: calc(1% + 15px) 2%;
 
   ${tw`
     flex
     flex-col
   `}
+
+  row-gap: 10px;
 `;
 
 const DateFrame = styled.div`
@@ -63,6 +65,9 @@ const DateFrame = styled.div`
 `;
 
 const DateBox = styled.div`
+  font-size: 1.4rem;
+  font-weight: bold;
+
   ${tw`
     flex
   `}
@@ -126,7 +131,7 @@ const OneRate = styled.div<{ isChosen: boolean }>`
   width: 100%;
   height: 100%;
 
-  outline: 2px solid black;
+  outline: 2px solid rgb(4 4 4 / 0.8);
   border-radius: 300px;
 
   &:hover {

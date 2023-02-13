@@ -53,6 +53,8 @@ const sampleComp = () => {
 const MainPage = styled.div`
   border: 2px solid rgb(179, 214, 149);
 
+  padding-top: 30px;
+
   background-color: rgba(128, 128, 128, 0.356);
 
   row-gap: 20px;

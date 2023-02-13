@@ -68,7 +68,7 @@ const MainFrame = styled.div<{
 
   /* min-height: 300px; */
 
-  padding: 2%;
+  padding: 2% 4%;
 
   ${tw`
     flex
@@ -77,6 +77,8 @@ const MainFrame = styled.div<{
 
     transform duration-200
   `}
+
+  row-gap: 4px;
 
   ${({ isEmpty }) => {
     if (isEmpty) {
@@ -94,6 +96,8 @@ const DateFrame = styled.div`
 `;
 
 const DateBox = styled.div`
+  font-weight: bold;
+
   ${tw`
     flex
   `}
@@ -101,6 +105,7 @@ const DateBox = styled.div`
 
 const DescriptionFrame = styled.div`
   flex-grow: 1;
+  padding-right: 38px;
 
   min-height: 50px;
 
@@ -113,6 +118,8 @@ const DescriptionFrame = styled.div`
 
 const DescriptionBox = styled.div`
   overflow-wrap: anywhere;
+  white-space: pre-line;
+  word-break: break-all;
   /* border: 1px solid gray; */
   width: 100%;
   text-align: left;
@@ -120,8 +127,10 @@ const DescriptionBox = styled.div`
   max-height: 100px;
   overflow-y: scroll;
 
-  background-color: #ffffff4e;
+  background-color: #ffffff22;
   border-radius: 6px;
+
+  padding: 4px;
 
   ${tw`
     flex
@@ -140,22 +149,28 @@ const RateFrame = styled.div`
 `;
 
 const RateGroup = styled.div`
-  position: relative;
+  /* position: relative; */
   width: 70%;
   /* border: 1px solid gray; */
   min-width: 200px;
 
   ${tw`
     flex
-    [justify-content: center]
+    [justify-content: flex-end]
   `}
+
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 `;
 
 const OneRate = styled.div`
   width: 100%;
   height: 100%;
 
-  border: 2px solid black;
+  color: rgb(4 4 4 / 0.7);
+
+  border: 2px solid rgb(4 4 4 / 0.7);
   border-radius: 300px;
 
   ${tw`
@@ -193,13 +208,14 @@ export const HistCard: FC<{
       isLeftMost={dIndex === 0}
     >
       <DateFrame>
-        <DateBox>{getCoolLocalDateString(dayData.dateStr)}</DateBox>
+        <DateBox>
+          {getCoolLocalDateString(dayData.dateStr)}{' '}
+          {isForTomorrow ? '(ხვალ)' : ''}
+        </DateBox>
       </DateFrame>
 
       <DescriptionFrame>
-        <DescriptionBox>
-          {isForTomorrow ? 'ხვალ' : dayData.description || ''}
-        </DescriptionBox>
+        <DescriptionBox>{dayData.description}</DescriptionBox>
       </DescriptionFrame>
 
       <RateFrame>
@@ -207,9 +223,9 @@ export const HistCard: FC<{
           <DivWithAspectRatioFromWidth
             widthCss={'15%'}
             widthByHeight={1}
-            outerStyle={`width: 15%; margin: 2%`}
+            outerStyle={`width: 15%;`}
           >
-            <OneRate>{dayData.rate}</OneRate>
+            {!isForTomorrow && <OneRate>{dayData.rate}</OneRate>}
           </DivWithAspectRatioFromWidth>
         </RateGroup>
       </RateFrame>
