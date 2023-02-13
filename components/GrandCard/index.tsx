@@ -17,7 +17,9 @@ import { lc_item_name } from 'pages';
 import {
   ChangeEvent,
   ChangeEventHandler,
+  Dispatch,
   FC,
+  SetStateAction,
   useCallback,
   useEffect,
   useMemo,
@@ -126,22 +128,11 @@ const OneRate = styled.div`
 export const GrandCard: FC<{
   dArr: OneDayData[];
   setDArr: React.Dispatch<React.SetStateAction<OneDayData[]>>;
-}> = ({ dArr, setDArr }) => {
+  currDateStr: null | string;
+}> = ({ dArr, setDArr, currDateStr }) => {
   // const [value, setValue] = useState<Dayjs | null>(dayjs());
 
-  const [currDateStr, setCurrDateStr] = useState<null | string>(
-    // convertDayjsDateIntoCurrTimezoneString10(dayjs()),
-    null,
-  );
-
   const initialized = useRef(false);
-
-  useEffect(() => {
-    if (!initialized.current && dArr.length >= 1) {
-      initialized.current = true;
-      setCurrDateStr(convertDayjsDateIntoCurrTimezoneString10(dayjs()));
-    }
-  }, [dArr]);
 
   const currIndex = useMemo(() => {
     return dArr.findIndex((day) => day.dateStr === currDateStr);

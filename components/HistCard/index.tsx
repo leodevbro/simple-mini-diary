@@ -13,7 +13,7 @@ import {
   getCoolLocalDateString,
   longText,
 } from 'helpers';
-import { FC, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import tw from 'twin.macro';
@@ -123,7 +123,11 @@ const OneRate = styled.div`
   `}
 `;
 
-export const HistCard: FC<{ dayData: OneDayData }> = ({ dayData }) => {
+export const HistCard: FC<{
+  dayData: OneDayData;
+  currDateStr: null | string;
+  setCurrDateStr: Dispatch<SetStateAction<string | null>>;
+}> = ({ dayData, currDateStr, setCurrDateStr }) => {
   const isEmpty = !dayData.description && !dayData.rate;
 
   const isForTomorrow =

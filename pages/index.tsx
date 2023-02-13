@@ -176,6 +176,8 @@ const IndexPage = () => {
   const dataPopulatedFromDb = useRef(false);
   const [dArr, setDArr] = useState<OneDayData[]>([]);
 
+  const [currDateStr, setCurrDateStr] = useState<null | string>(null);
+
   // const [currSelectionDateStr, setCurrSelectionDateStr] = useState(
   //   convertDayjsDateIntoCurrTimezoneString10(dayjs()),
   // );
@@ -188,6 +190,10 @@ const IndexPage = () => {
 
     dataPopulatedFromDb.current = true;
     setDArr(initArr);
+
+    if (initArr.length > 0) {
+      setCurrDateStr(convertDayjsDateIntoCurrTimezoneString10(dayjs()));
+    }
   }, []);
 
   useEffect(() => {
@@ -289,7 +295,7 @@ const IndexPage = () => {
     <MainPage className="thePage">
       <EditBox>
         <GrandView>
-          <GrandCard dArr={dArr} setDArr={setDArr} />
+          <GrandCard dArr={dArr} setDArr={setDArr} currDateStr={currDateStr} />
         </GrandView>
       </EditBox>
       <HistBox>
@@ -297,7 +303,11 @@ const IndexPage = () => {
           {sliderArr.map((day) => {
             return (
               <OneBoxOfSlide key={day.dateStr}>
-                <HistCard dayData={day} />
+                <HistCard
+                  dayData={day}
+                  currDateStr={currDateStr}
+                  setCurrDateStr={setCurrDateStr}
+                />
               </OneBoxOfSlide>
             );
           })}
