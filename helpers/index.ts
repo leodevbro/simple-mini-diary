@@ -142,7 +142,7 @@ export const getAllDataFromDb = (): DbSchema => {
   }
 };
 
-const testDbVersion1: DbSchema = {
+export const testDbVersion1: DbSchema = {
   dayArr: [
     {
       dateStr: '2020-01-08',

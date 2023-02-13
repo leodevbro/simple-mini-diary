@@ -20,6 +20,8 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { OneDayData, DbSchema } from 'types/main-types';
 
+import { SweetSlider } from 'components/SweetSlider/SweetSlider';
+
 /*
 const styles = {
   // Move long class sets out of jsx to keep it scannable
@@ -88,19 +90,6 @@ const HistSlide = styled.div`
     overflow-x-scroll
     flex
     w-full
-  `}
-`;
-
-const OneBoxOfSlide = styled.div`
-  min-width: 150px;
-  max-width: 400px;
-  width: 200px;
-  height: 200px;
-
-  border: 2px solid blue;
-
-  ${tw`
-    flex
   `}
 `;
 
@@ -235,6 +224,8 @@ const IndexPage = () => {
     return arr;
   }, [dArr]);
 
+  const style: any = 4;
+
   return (
     <MainPage className="thePage">
       <EditBox>
@@ -244,17 +235,11 @@ const IndexPage = () => {
       </EditBox>
       <HistBox>
         <HistSlide>
-          {sliderArr.map((day) => {
-            return (
-              <OneBoxOfSlide key={day.dateStr}>
-                <HistCard
-                  dayData={day}
-                  currDateStr={currDateStr}
-                  setCurrDateStr={setCurrDateStr}
-                />
-              </OneBoxOfSlide>
-            );
-          })}
+          <SweetSlider
+            slideItems={sliderArr}
+            currDateStr={currDateStr}
+            setCurrDateStr={setCurrDateStr}
+          />
         </HistSlide>
       </HistBox>
     </MainPage>
