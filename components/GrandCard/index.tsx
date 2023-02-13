@@ -8,11 +8,22 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
 import dayjs, { Dayjs } from 'dayjs';
-import { longText } from 'helpers';
-import { ChangeEventHandler, FC, useCallback, useState } from 'react';
+import { convertDayjsDateIntoCurrTimezoneString10, longText } from 'helpers';
+import { lc_item_name } from 'pages';
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 
 import tw from 'twin.macro';
+import { DbSchema, OneDayData } from 'types/main-types';
 
 const MainFrame = styled.div`
   max-width: calc(min(100%, 700px));
@@ -108,15 +119,48 @@ const OneRate = styled.div`
   `}
 `;
 
-export const GrandCard: FC<{}> = ({}) => {
+export const GrandCard: FC<{
+  dArr: OneDayData[];
+  setDArr: React.Dispatch<React.SetStateAction<OneDayData[]>>;
+}> = ({ dArr, setDArr }) => {
   // const [value, setValue] = useState<Dayjs | null>(dayjs());
 
-  const [descr, setDescr] = useState(longText);
+  const [currDateStr, setCurrDateStr] = useState(
+    convertDayjsDateIntoCurrTimezoneString10(dayjs()),
+  );
 
-  const onChangeDescr: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
-    (e) => {
+  const currIndex = useMemo(() => {
+    return dArr.findIndex((day) => day.dateStr === currDateStr);
+  }, [dArr, currDateStr]);
+
+  const timerRefForDbUpdate = useRef<NodeJS.Timeout | null>(null);
+
+  const onChangeDescr = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
       const newVal = e.target.value;
-      setDescr(newVal);
+
+      setDArr((prev) => {
+        const shallowCopy = [...prev];
+
+        shallowCopy[index] = {
+          ...prev[index],
+          description: newVal,
+        };
+
+        if (timerRefForDbUpdate.current) {
+          clearTimeout(timerRefForDbUpdate.current);
+        }
+
+        timerRefForDbUpdate.current = setTimeout(() => {
+          const newDb: DbSchema = {
+            dayArr: shallowCopy.filter((day) => day.description || day.rate),
+          };
+
+          window.localStorage.setItem(lc_item_name, JSON.stringify(newDb));
+        }, 2000);
+
+        return shallowCopy;
+      });
     },
     [],
   );
@@ -133,17 +177,23 @@ export const GrandCard: FC<{}> = ({}) => {
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider> */}
-          date
+
+          {dArr[currIndex]?.dateStr || 'Date'}
         </DateBox>
       </DateFrame>
 
       <DescriptionFrame>
-        <DescriptionBox value={descr} onChange={onChangeDescr} />
+        <DescriptionBox
+          value={dArr[currIndex]?.description || ''}
+          onChange={(e) => onChangeDescr(e, currIndex)}
+        />
       </DescriptionFrame>
 
       <RateFrame>
         <RateGroup>
           {[1, 2, 3, 4, 5].map((rate) => {
+            // const isChosenRate = rate ===
+
             return (
               <DivWithAspectRatioFromWidth
                 key={rate}

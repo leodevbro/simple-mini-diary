@@ -102,6 +102,10 @@ const OneBoxOfSlide = styled.div`
   `}
 `;
 
+// ------
+
+export const lc_item_name = 'cool_diary_db';
+
 const testDbVersion1: DbSchema = {
   dayArr: [
     {
@@ -127,16 +131,58 @@ const testDbVersion1: DbSchema = {
       description: 'sdfsdfs uuuusf sdfsdf sfd sd',
       rate: 4,
     },
+
+    {
+      dateStr: '2023-02-13',
+      description: 'sdfsdfs uuuusf sdfsdf sfd sd',
+      rate: 4,
+    },
   ],
+};
+
+const initiateDbWithSampleData = () => {
+  window.localStorage.setItem(lc_item_name, JSON.stringify(testDbVersion1));
+};
+
+/*
+
+const dbbbb = window.localStorage.getItem('cool_diary_db');
+const objjj = JSON.parse(dbbbb);
+console.log(objjj);
+
+*/
+
+// -----------
+
+const getAllDataFromDb = (): DbSchema => {
+  const rawData = window.localStorage.getItem(lc_item_name);
+
+  if (!rawData) {
+    return {
+      dayArr: [],
+    };
+  } else {
+    const parsed = JSON.parse(rawData) as DbSchema;
+    return parsed;
+  }
 };
 
 const IndexPage = () => {
   const dataPopulatedFromDb = useRef(false);
-  const [dArr, setDArr] = useState<DbSchema['dayArr']>([]);
+  const [dArr, setDArr] = useState<OneDayData[]>([]);
+
+  // const [currSelectionDateStr, setCurrSelectionDateStr] = useState(
+  //   convertDayjsDateIntoCurrTimezoneString10(dayjs()),
+  // );
 
   const populateDataFromDb = useCallback(() => {
+    const dbData = getAllDataFromDb();
+    const rawArr = dbData.dayArr;
+
+    const initArr = mergeDataArrIntoEmptyLastNDays(rawArr, 7);
+
     dataPopulatedFromDb.current = true;
-    setDArr(testDbVersion1.dayArr);
+    setDArr(initArr);
   }, []);
 
   useEffect(() => {
@@ -188,6 +234,7 @@ const IndexPage = () => {
     [],
   );
 
+  /*
   const finalArrOfDays = useMemo(() => {
     if (!dataPopulatedFromDb.current) {
       return [];
@@ -207,16 +254,43 @@ const IndexPage = () => {
     return initArr;
   }, [dArr]);
 
+  */
+
+  const sliderArr = useMemo(() => {
+    if (!dataPopulatedFromDb.current) {
+      return [];
+    }
+
+    const arr = [...dArr];
+    let localDateStrOfTomorrow = convertDayjsDateIntoCurrTimezoneString10(
+      dayjs().add(1, 'day'),
+    );
+
+    if (dArr.at(-1) && dArr.at(-1)?.dateStr === localDateStrOfTomorrow) {
+      localDateStrOfTomorrow = convertDayjsDateIntoCurrTimezoneString10(
+        dayjs().add(2, 'days'),
+      );
+    }
+
+    arr.push({
+      description: null,
+      rate: null,
+      dateStr: localDateStrOfTomorrow,
+    });
+
+    return arr;
+  }, [dArr]);
+
   return (
     <MainPage className="thePage">
       <EditBox>
         <GrandView>
-          <GrandCard />
+          <GrandCard dArr={dArr} setDArr={setDArr} />
         </GrandView>
       </EditBox>
       <HistBox>
         <HistSlide>
-          {finalArrOfDays.map((day) => {
+          {sliderArr.map((day) => {
             return (
               <OneBoxOfSlide key={day.dateStr}>
                 <HistCard dayData={day} />

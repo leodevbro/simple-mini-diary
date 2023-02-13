@@ -14,10 +14,18 @@ const genLongText = () => {
 
 export const longText = genLongText();
 
+export const leftZeroIfOneDigit = (num: number) => {
+  if (0 <= num && num <= 9) {
+    return `0${num}`;
+  }
+
+  return `${num}`;
+};
+
 export const convertDayjsDateIntoCurrTimezoneString10 = (d: dayjs.Dayjs) => {
   const yearInCurrTimezone = d.year();
-  const monthInCurrTimezone = d.month() + 1;
-  const dayInCurrTimezone = d.date();
+  const monthInCurrTimezone = leftZeroIfOneDigit(d.month() + 1);
+  const dayInCurrTimezone = leftZeroIfOneDigit(d.date());
 
   return `${yearInCurrTimezone}-${monthInCurrTimezone}-${dayInCurrTimezone}`;
 };

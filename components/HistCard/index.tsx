@@ -8,7 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DivWithAspectRatioFromWidth } from 'components/DivWithAspectRatio/FromWidth';
 
 import dayjs, { Dayjs } from 'dayjs';
-import { longText } from 'helpers';
+import { convertDayjsDateIntoCurrTimezoneString10, longText } from 'helpers';
 import { FC, useState } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -121,6 +121,10 @@ const OneRate = styled.div`
 
 export const HistCard: FC<{ dayData: OneDayData }> = ({ dayData }) => {
   const isEmpty = !dayData.description && !dayData.rate;
+
+  const isForTomorrow =
+    convertDayjsDateIntoCurrTimezoneString10(dayjs().add(1, 'day')) ===
+    dayData.dateStr;
 
   return (
     <MainFrame isEmpty={isEmpty}>
