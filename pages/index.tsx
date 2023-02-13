@@ -204,7 +204,6 @@ const IndexPage = () => {
     (origDataArrASC: OneDayData[], n: number) => {
       const localDateStringsForTodayAndLastNDays =
         generateLocalDateStringsForTodayAndLastNDaysDESC(n);
-      console.log(localDateStringsForTodayAndLastNDays);
 
       const origDataArrDESC = (
         JSON.parse(JSON.stringify(origDataArrASC)) as OneDayData[]

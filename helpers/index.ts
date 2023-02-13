@@ -108,8 +108,6 @@ export const getCoolLocalDateString = (isoLocalDateStr: string) => {
 
   const isInCurrWeekFromLastMonday = theDate >= getLastMonday(nowDate);
 
-  console.log(theDate.toISOString(), getLastMonday(nowDate).toISOString());
-
   if (isInCurrWeekFromLastMonday) {
     return daysOfWeekInGerogianAsSunday0[theDate.day()];
   } else {
