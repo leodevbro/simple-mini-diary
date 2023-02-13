@@ -14,6 +14,7 @@ import {
   longText,
   updateDb,
 } from 'helpers';
+import { cla } from 'pages/_app';
 
 import {
   ChangeEvent,
@@ -125,19 +126,30 @@ const OneRate = styled.div<{ isChosen: boolean }>`
   width: 100%;
   height: 100%;
 
-  border: 2px solid black;
+  outline: 2px solid black;
   border-radius: 300px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  font-size: 150%;
 
   ${tw`
     flex
     [align-items: center]
     [justify-content: center]
+
+    hocus:(scale-110)
+
+    transform duration-200
   `}
 
   ${({ isChosen }) => {
     if (isChosen) {
       return css`
-        background-color: green;
+        /* background-color: green; */
+        outline: 4px solid #0895d6a3;
       `;
     }
   }}
@@ -246,6 +258,13 @@ export const GrandCard: FC<{
           {rateArr.map((rate) => {
             // const isChosenRate = rate ===
 
+            const isChosen =
+              currIndex !== null &&
+              dArr[currIndex] &&
+              rate === dArr[currIndex].rate;
+
+            const cl_mood = `m${isChosen ? rate : ''}`;
+
             return (
               <DivWithAspectRatioFromWidth
                 key={rate}
@@ -254,11 +273,8 @@ export const GrandCard: FC<{
                 outerStyle={`width: 15%; margin: 2%`}
               >
                 <OneRate
-                  isChosen={
-                    currIndex !== null &&
-                    dArr[currIndex] &&
-                    rate === dArr[currIndex].rate
-                  }
+                  className={cla('specialMoodArea', cl_mood)}
+                  isChosen={isChosen}
                   onClick={
                     currIndex !== null
                       ? () => onChangeRate(rate, currIndex)

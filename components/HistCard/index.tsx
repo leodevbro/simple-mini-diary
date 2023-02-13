@@ -33,6 +33,13 @@ const MainFrame = styled.div<{ isEmpty: boolean; isLeftMost: boolean }>`
   /* width: calc(40% + 200px); */
   /* height: 200px; */
 
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+    z-index: 50;
+  }
+
   width: 100%;
   height: 100%;
 
@@ -61,6 +68,9 @@ const MainFrame = styled.div<{ isEmpty: boolean; isLeftMost: boolean }>`
   ${tw`
     flex
     flex-col
+    hocus:(scale-105)
+
+    transform duration-200
   `}
 
   ${({ isEmpty }) => {
