@@ -140,7 +140,7 @@ export const getCoolLocalDateString = (isoLocalDateStr: string) => {
   }
 };
 
-const getWeekDayDateInCurrWeek = (target: number) => {
+export const getWeekDayDateInCurrWeek = (target: number) => {
   // target --> 0: sunday, 1: monday ......
 
   const lastMondayInThisWeek = getLastMonday(dayjs());

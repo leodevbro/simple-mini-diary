@@ -234,7 +234,7 @@ export const GrandCard: FC<{
   return (
     <MainFrame>
       <DateFrame>
-        <DateBox>
+        <DateBox data-testid="dateBoxOfEditor">
           {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Pick date"
