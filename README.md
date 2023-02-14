@@ -3,9 +3,8 @@
 Video Demo:<br />
 https://www.youtube.com/watch?v=pUbThsX-ExE
 
-
 Live:<br />
-https://www.youtube.com/watch?v=pUbThsX-ExE
+https://simple-mini-diary.vercel.app
 
 Source Code:<br />
 https://github.com/leodevbro/simple-mini-diary
