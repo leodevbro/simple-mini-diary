@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
-import { GrandCard } from './proxy.tsx';
+// import { GrandCard } from './proxy.tsx';
+import { GrandCard } from './index.tsx';
 
 import { getWeekDayDateInCurrWeek } from '../../helpers/index.ts';
 
@@ -32,7 +33,12 @@ describe(GrandCard, () => {
   for (let i = 0; i < arrOfInputs.length; i += 1) {
     it('displays correct date', () => {
       const { getByTestId } = render(
-        <GrandCard currDateStr={arrOfInputs[i]} />,
+        <GrandCard
+          currDateStr={arrOfInputs[i]}
+          dArr={[]}
+          setDArr={() => 0}
+          currIndex={0}
+        />,
       );
 
       const currDateStrG = getByTestId('dateBoxOfEditor').textContent;
